@@ -148,7 +148,10 @@ function App({
       <main className={uiPleaseWait ? 'please-wait' : ''}>
         <div className="header">
           <div></div>
-          <SignOutButton accountId={walletConnection.getAccountId()} handleClick={() => walletConnection.signOut()}/>
+          <SignOutButton accountId={walletConnection.getAccountId()} handleClick={() => {
+            walletConnection.signOut();
+            window.location.reload();
+          }}/>
         </div>
         <div className="slots">
           <div className="slot">
