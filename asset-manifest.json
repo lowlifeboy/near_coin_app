@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/near_coin_app/static/css/main.35b1456d.css",
+    "main.js": "/near_coin_app/static/js/main.30250dfe.js",
+    "static/js/787.efefbd1f.chunk.js": "/near_coin_app/static/js/787.efefbd1f.chunk.js",
+    "static/media/dragon-fruit.png": "/near_coin_app/static/media/dragon-fruit.8b492057b3ee08e79290.png",
+    "static/media/slots.png": "/near_coin_app/static/media/slots.6dbf8439fd9179a3318a.png",
+    "static/media/avocado.png": "/near_coin_app/static/media/avocado.2205c235966b8fa662fb.png",
+    "static/media/durian (1).png": "/near_coin_app/static/media/durian (1).78ac8b806b86e65da1fe.png",
+    "static/media/grapes.png": "/near_coin_app/static/media/grapes.792eff620e41dc25e3cf.png",
+    "static/media/bananas.png": "/near_coin_app/static/media/bananas.5c6ec729f1ab33c04c66.png",
+    "static/media/apple.png": "/near_coin_app/static/media/apple.8733e25df08f8f06bf7e.png",
+    "static/media/mango.png": "/near_coin_app/static/media/mango.72bfb71aafb521470217.png",
+    "static/media/orange-juice.png": "/near_coin_app/static/media/orange-juice.e7a1aaf1e04bc61a6bb3.png",
+    "index.html": "/near_coin_app/index.html",
+    "main.35b1456d.css.map": "/near_coin_app/static/css/main.35b1456d.css.map",
+    "main.30250dfe.js.map": "/near_coin_app/static/js/main.30250dfe.js.map",
+    "787.efefbd1f.chunk.js.map": "/near_coin_app/static/js/787.efefbd1f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35b1456d.css",
+    "static/js/main.30250dfe.js"
+  ]
+}
