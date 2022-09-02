@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/near_coin_app/static/css/main.35b1456d.css",
-    "main.js": "/near_coin_app/static/js/main.d708d005.js",
+    "main.css": "/near_coin_app/static/css/main.d8456174.css",
+    "main.js": "/near_coin_app/static/js/main.b4697b8e.js",
     "static/js/787.efefbd1f.chunk.js": "/near_coin_app/static/js/787.efefbd1f.chunk.js",
     "static/media/dragon-fruit.png": "/near_coin_app/static/media/dragon-fruit.8b492057b3ee08e79290.png",
     "static/media/slots.png": "/near_coin_app/static/media/slots.6dbf8439fd9179a3318a.png",
@@ -13,12 +13,12 @@
     "static/media/mango.png": "/near_coin_app/static/media/mango.72bfb71aafb521470217.png",
     "static/media/orange-juice.png": "/near_coin_app/static/media/orange-juice.e7a1aaf1e04bc61a6bb3.png",
     "index.html": "/near_coin_app/index.html",
-    "main.35b1456d.css.map": "/near_coin_app/static/css/main.35b1456d.css.map",
-    "main.d708d005.js.map": "/near_coin_app/static/js/main.d708d005.js.map",
+    "main.d8456174.css.map": "/near_coin_app/static/css/main.d8456174.css.map",
+    "main.b4697b8e.js.map": "/near_coin_app/static/js/main.b4697b8e.js.map",
     "787.efefbd1f.chunk.js.map": "/near_coin_app/static/js/787.efefbd1f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.35b1456d.css",
-    "static/js/main.d708d005.js"
+    "static/css/main.d8456174.css",
+    "static/js/main.b4697b8e.js"
   ]
 }
