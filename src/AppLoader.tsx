@@ -5,8 +5,14 @@ import {initApiControl} from '@roketo/sdk';
 import type {TransactionMediator} from '@roketo/sdk/dist/types';
 import App, {IAppProps} from './App';
 import {SignInPrompt} from "./components/SignInPrompt";
+import {useAppDispatch, useAppSelector} from "./state/hooks";
+import {setAccountId} from "./state/slices/userSlice";
 
 function AppLoader() {
+  const dispatch = useAppDispatch();
+
+  const {accountId} = useAppSelector((state) => state.user);
+
   const [roketoProps, setRoketoProps] = useState<IAppProps | null>(null);
 
   useEffect(() => {
@@ -45,9 +51,10 @@ function AppLoader() {
         roketoContractName: NEAR_CONSTANTS.roketoContractName,
       });
 
+      dispatch(setAccountId(accountId));
+
       setRoketoProps({
         account,
-        accountId,
         contract,
         transactionMediator,
         roketoContractName: NEAR_CONSTANTS.roketoContractName,
@@ -58,7 +65,7 @@ function AppLoader() {
     })();
   }, []);
 
-  return roketoProps?.accountId ? (
+  return roketoProps?.account && accountId ? (
     <App {...roketoProps} />
   ) : (
     <SignInPrompt

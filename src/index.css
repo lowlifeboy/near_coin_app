@@ -270,6 +270,7 @@ main.please-wait .loader:after{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
+  margin-bottom: 24px;
 }
 
 .slot {
@@ -314,10 +315,10 @@ section {
 }
 
 .score {
-  font-size: 40px;
+  font-size: 28px;
   color: #fff;
-  margin-top: 48px;
-  margin-bottom: 4px;
+  margin-top: 0;
+  margin-bottom: 8px;
 }
 
 .rates {
@@ -325,7 +326,7 @@ section {
 }
 
 .rates button {
-  margin: 20px;
+  margin: 0 20px 20px 20px;
   width: 96px;
   height: 96px;
   border-radius: 24px;
@@ -342,6 +343,10 @@ section {
 .rates button.active {
   border: 2px solid #121826;
   background-color: #3a4c72;
+}
+
+#availableRoutesNumber {
+  margin-top: 0;
 }
 
 .roll {

@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import AppLoader from './AppLoader';
+import { Provider } from 'react-redux';
+import { store } from './state/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+
+const persistor = persistStore(store);
 
 import { Buffer } from 'buffer';
 global.Buffer = Buffer;
@@ -12,7 +18,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <AppLoader />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppLoader />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

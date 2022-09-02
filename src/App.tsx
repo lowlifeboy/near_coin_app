@@ -9,12 +9,13 @@ import type { Action as NearAction } from 'near-api-js/lib/transaction';
 import { FTContract, RoketoContract, TransactionMediator } from '@roketo/sdk/dist/types';
 import {awards, combinations, fruits, rates, scales} from "./settings";
 import {SignOutButton} from "./components/SignOutButton";
+import {useAppDispatch, useAppSelector} from "./state/hooks";
+import {setAvailableRoutesNumber, setDeposit, setRate} from "./state/slices/userSlice";
 
 const FEEDING_SPEED_THRESHOLD = 10000;
 
 export interface IAppProps {
   account: ConnectedWalletAccount;
-  accountId: string;
   contract: RoketoContract;
   transactionMediator: TransactionMediator<NearAction>;
   roketoContractName: string;
@@ -25,7 +26,6 @@ export interface IAppProps {
 
 function App({
   account,
-  accountId,
   contract,
   transactionMediator,
   roketoContractName,
@@ -33,13 +33,16 @@ function App({
   wNearContractName,
   walletConnection,
 }: IAppProps) {
+  const dispatch = useAppDispatch();
+
+  const {accountId, availableRoutesNumber, deposit, rate} = useAppSelector((state) => state.user);
+
   const [uiPleaseWait, setUiPleaseWait] = useState(true);
   const [fruit1, setFruit1] = useState(fruits[0]);
   const [fruit2, setFruit2] = useState(fruits[0]);
   const [fruit3, setFruit3] = useState(fruits[0]);
   const [score, setScore] = useState(0);
   const [rolling, setRolling] = useState(false);
-  const [rate, setRate] = useState(rates[0]);
 
   let isFirstRef = useRef(true);
   let slotRef = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
@@ -54,7 +57,7 @@ function App({
 
     await createStream({
       comment: '',
-      deposit: `1000000000000000000000000`,
+      deposit: `${Math.abs(value)}000000000000000000000000`,
       commissionOnCreate: '100000000000000000000000',
       receiverId: value > 0 ? 'killerkenny.testnet' : accountId,
       tokenAccountId,
@@ -74,16 +77,12 @@ function App({
       if (fruit1 === fruit2 && fruit1 === fruit3) {
         // @ts-ignore
         const value = Math.floor(combinations[fruit1] * scales[rates.indexOf(rate)] * awards[rates.indexOf(rate)]);
-        handleClick(value);
-        setScore(score + value);
+        dispatch(setDeposit(deposit + value));
       } else {
-        try {
-          handleClick(-rate);
-        } catch (e) {
-          console.log('Error', e);
-        }
-        setScore(score - rate);
+        dispatch(setDeposit(deposit - rate));
       }
+
+      dispatch(setAvailableRoutesNumber(availableRoutesNumber - 1));
     }
   }, [rolling, isFirstRef.current])
 
@@ -140,6 +139,14 @@ function App({
     })
   }, [contract]);
 
+  async function finish() {
+    const value = deposit;
+    dispatch(setDeposit(0));
+    dispatch(setAvailableRoutesNumber(0));
+    dispatch(setRate(rates[0]));
+    handleClick(value);
+  }
+
   return (
     <>
       <main className={uiPleaseWait ? 'please-wait' : ''}>
@@ -188,28 +195,66 @@ function App({
 
         <p className="score">Score: {score}</p>
 
-        <div className="rates">
-          {rates.map((item) => (
-            <button
-              key={`rate:${item}`}
-              type="button"
-              className={rate === item ? 'active' : ''}
-              onClick={() => setRate(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        {deposit > 0 && availableRoutesNumber > 0 && <p className="score">Deposit: {deposit}</p>}
 
-        <button
-          type="button"
-          className={!rolling ? "roll rolling" : "roll"}
-          onClick={rolling ? () => null : () => roll()}
-          disabled={rolling || score < rate}
-          style={score < rate ? {backgroundColor: "#eee"} : {}}
-        >
-          {rolling ? "Rolling..." : "ROLL"}
-        </button>
+        {deposit > 0 && availableRoutesNumber > 0 && <p className="score">Available routes number: {availableRoutesNumber}</p>}
+
+        {(deposit > 0 && availableRoutesNumber > 0)
+          ? (
+            <>
+              <button
+                type="button"
+                className={!rolling ? "roll rolling" : "roll"}
+                onClick={rolling ? () => null : () => roll()}
+                disabled={rolling || score < rate}
+                style={score < rate ? {backgroundColor: "#eee"} : {}}
+              >
+                {rolling ? "Rolling..." : "ROLL"}
+              </button>
+
+              <button
+                type="button"
+                className="roll rolling"
+                onClick={() => finish()}
+                disabled={deposit <= 0}
+              >
+                Finish
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="score">Select rate</p>
+              <div className="rates">
+                {rates.map((item) => (
+                  <button
+                    key={`rate:${item}`}
+                    type="button"
+                    className={rate === item ? 'active' : ''}
+                    onClick={() => dispatch(setRate(item))}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+              <p className="score">Select number of rotes</p>
+              <label htmlFor="availableRoutesNumber">
+                <input
+                  className="roll rolling"
+                  name="availableRoutesNumber"
+                  id="availableRoutesNumber"
+                  type="number"
+                  style={{ width: "100%", maxWidth: 400}}
+                  placeholder="Enter number of rotes"
+                  onChange={(event) => dispatch(setAvailableRoutesNumber(Math.abs(+event.target.value)))}
+                />
+              </label>
+              <button className="roll" type="button" onClick={((rate * availableRoutesNumber) < score ? () => {
+                dispatch(setDeposit(rate * availableRoutesNumber));
+                dispatch(setAvailableRoutesNumber(availableRoutesNumber));
+                handleClick(-rate * availableRoutesNumber);
+              } : () => null)}>Bet</button>
+            </>
+        )}
       </main>
     </>
   );
