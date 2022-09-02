@@ -4,4 +4,6 @@ These are slots with Near coins instead of regular money
 
 ![Alt text](public/preview.png?raw=true "Title")
 
+![Alt text](public/preview.gif "Title")
+
 ### [Open game](https://lowlifeboy.github.io/near_coin_app/ "ModernSlots")
