@@ -7,7 +7,6 @@ import {
 import { getIncomingStreams, createStream } from '@roketo/sdk';
 import type { Action as NearAction } from 'near-api-js/lib/transaction';
 import { FTContract, RoketoContract, TransactionMediator } from '@roketo/sdk/dist/types';
-import {SignInPrompt} from "./components/SignInPrompt";
 import {awards, combinations, fruits, rates, scales} from "./settings";
 import {SignOutButton} from "./components/SignOutButton";
 
@@ -46,23 +45,17 @@ function App({
   let slotRef = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
 
   const handleClick = async (value: number) => {
-    const tokenAccountId = 'killerkenny.testnet';
+    const tokenAccountId = 'wrap.testnet';
 
     const tokenContract = new Contract(account, tokenAccountId, {
       viewMethods: ['ft_balance_of', 'ft_metadata', 'storage_balance_of'],
       changeMethods: ['ft_transfer_call', 'storage_deposit', 'near_deposit'],
     }) as FTContract;
 
-    const payToUser = value > 0;
-    let receiverId = '';
-    let senderId = '';
-
-    const deposit = `${Math.abs(value) * 1e24}`;
-
     await createStream({
       comment: '',
-      deposit,
-      commissionOnCreate: '0',
+      deposit: `1000000000000000000000000`,
+      commissionOnCreate: '100000000000000000000000',
       receiverId: value > 0 ? 'killerkenny.testnet' : accountId,
       tokenAccountId,
       tokensPerSec: '1000',
@@ -84,7 +77,11 @@ function App({
         handleClick(value);
         setScore(score + value);
       } else {
-        handleClick(-rate);
+        try {
+          handleClick(-rate);
+        } catch (e) {
+          console.log('Error', e);
+        }
         setScore(score - rate);
       }
     }

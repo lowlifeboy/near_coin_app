@@ -17,7 +17,7 @@ function AppLoader() {
         networkId: 'testnet',
         roketoContractName: 'streaming-r-v2.dcversus.testnet',
         financeContractName: 'finance-r-v2.dcversus.testnet',
-        wNearContractName: 'wnear.testnet',
+        wNearContractName: 'wrap.testnet',
       };
 
       const keyStore = new keyStores.BrowserLocalStorageKeyStore();
